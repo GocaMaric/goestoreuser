@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/aws/aws-sdk-go-v2/aws"
+	"github.com/aws/aws-sdk-go-v2/service/secretsmanager"
 	"goestoreuser/awsgo"
 	"goestoreuser/models"
 )
@@ -12,8 +13,8 @@ func GetSecret(numberSecret string) (models.SecretRDSJson, error) {
 	var dataSecret models.SecretRDSJson
 	fmt.Println(" > Secret number " + numberSecret)
 
-	svc := secretmanager.NewFromConfig(awsgo.Cfg)
-	clue, err := svc.GetSecretValue(awsgo.Ctx, &secretmanager.GetSecretValueInput{
+	svc := secretsmanager.NewFromConfig(awsgo.Cfg)
+	clue, err := svc.GetSecretValue(awsgo.Ctx, &secretsmanager.GetSecretValueInput{
 		SecretId: aws.String(numberSecret),
 	})
 	if err != nil {
@@ -23,5 +24,5 @@ func GetSecret(numberSecret string) (models.SecretRDSJson, error) {
 
 	json.Unmarshal([]byte(*clue.SecretString), &dataSecret)
 	fmt.Println(" > Secret OK" + numberSecret)
-	return dataSecret, nill
+	return dataSecret, nil
 }

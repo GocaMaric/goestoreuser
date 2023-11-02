@@ -13,7 +13,7 @@ var err error
 var Db *sql.DB
 
 func ReadSecret() error {
-	SecretModel, err := secretm.GetSecret(os.Getenv("SecretName"))
+	SecretModel, err = secretm.GetSecret(os.Getenv("SecretName"))
 	return err
 }
 
